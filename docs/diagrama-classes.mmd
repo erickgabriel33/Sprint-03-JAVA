@@ -1,0 +1,114 @@
+classDiagram
+    direction TB
+    class Analisavel {
+        <<interface>>
+        +analisarConteudo() String
+        +analiseDisponivel() boolean
+    }
+    class Reuniao {
+        <<abstract>>
+        #Long id
+        #String titulo
+        #LocalDateTime dataHora
+        #int duracaoMinutos
+        #StatusReuniao status
+        #boolean processada
+        #Long usuarioId
+        #Long clienteId
+        +getTipo() TipoReuniao
+        +calcularPrioridade() double
+        +aplicarAnalise(AnaliseReuniao) void
+        +classificarPrioridade() String
+        +alterarStatus(StatusReuniao) void
+        +registrarTranscricao() void
+    }
+    class ReuniaoVendas {
+        -BigDecimal valorOportunidade
+        -int scoreRisco
+        -boolean concorrente
+        +calcularValorPonderado() BigDecimal
+        +classificarRisco() String
+        +alertaConcorrencia() String
+    }
+    class ReuniaoCS {
+        -int nps
+        -int reclamacoes
+        -boolean sinalChurn
+        +classificarNps() String
+        +relatorioRetencao() String
+    }
+    class Usuario {
+        -Long id
+        -String nome
+        -String email
+        -String senhaHash
+        -String cargo
+        -String empresa
+        -LocalDateTime dataCadastro
+    }
+    class Cliente {
+        -Long id
+        -String nome
+        -String cnpj
+        -String segmento
+        -PorteEmpresa porte
+        -String emailContato
+        -LocalDateTime dataCadastro
+        +getCnpjFormatado() String
+    }
+    class Transcricao {
+        -Long id
+        -Long reuniaoId
+        -String texto
+        -int numeroPalavras
+        -LocalDateTime dataEnvio
+    }
+    class AnaliseReuniao {
+        -Long id
+        -Long reuniaoId
+        -Sentimento sentimento
+        -int scoreSentimento
+        -int riscoChurn
+        -int scoreOportunidade
+        -List~String~ produtos
+        -List~String~ concorrentes
+        -List~String~ termos
+        -String recomendacao
+        +getNivelRiscoChurn() String
+        +getNivelOportunidade() String
+    }
+    class StatusReuniao {
+        <<enumeration>>
+        AGENDADA
+        REALIZADA
+        CANCELADA
+        +podeMudarPara(StatusReuniao) boolean
+    }
+    class TipoReuniao {
+        <<enumeration>>
+        VENDAS
+        CS
+    }
+    class Sentimento {
+        <<enumeration>>
+        POSITIVO
+        NEUTRO
+        NEGATIVO
+    }
+    class PorteEmpresa {
+        <<enumeration>>
+        PEQUENO
+        MEDIO
+        GRANDE
+    }
+    Analisavel <|.. Reuniao
+    Reuniao <|-- ReuniaoVendas
+    Reuniao <|-- ReuniaoCS
+    Usuario "1" --> "0..*" Reuniao : responsavel
+    Cliente "1" --> "0..*" Reuniao : participa
+    Reuniao "1" --> "0..1" Transcricao
+    Reuniao "1" --> "0..1" AnaliseReuniao
+    Reuniao ..> StatusReuniao
+    Reuniao ..> TipoReuniao
+    AnaliseReuniao ..> Sentimento
+    Cliente ..> PorteEmpresa
