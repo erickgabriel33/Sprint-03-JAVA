@@ -1,0 +1,524 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-10-20T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v10.0.0",
+  "resources": [
+    {
+      "_id": "wrk_reunia",
+      "_type": "workspace",
+      "parentId": null,
+      "name": "API Reun.IA",
+      "scope": "collection",
+      "description": "Requisicoes da API Restful da Reun.IA (Sprint 4)"
+    },
+    {
+      "_id": "env_reunia",
+      "_type": "environment",
+      "parentId": "wrk_reunia",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:8080"
+      }
+    },
+    {
+      "_id": "fld_1",
+      "_type": "request_group",
+      "parentId": "wrk_reunia",
+      "name": "1 - Usuarios",
+      "metaSortKey": -999
+    },
+    {
+      "_id": "req_1",
+      "_type": "request",
+      "parentId": "fld_1",
+      "name": "login",
+      "method": "POST",
+      "url": "{{ _.base_url }}/usuarios/login",
+      "metaSortKey": 1,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"erick@totvs.com.br\",\n  \"senha\": \"Totvs@2026\"\n}"
+      }
+    },
+    {
+      "_id": "req_2",
+      "_type": "request",
+      "parentId": "fld_1",
+      "name": "cadastro",
+      "method": "POST",
+      "url": "{{ _.base_url }}/usuarios",
+      "metaSortKey": 2,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Ana Souza\",\n  \"email\": \"ana.souza@totvs.com.br\",\n  \"senha\": \"Senha123\",\n  \"cargo\": \"Analista de CS\",\n  \"empresa\": \"TOTVS\"\n}"
+      }
+    },
+    {
+      "_id": "req_3",
+      "_type": "request",
+      "parentId": "fld_1",
+      "name": "consulta",
+      "method": "GET",
+      "url": "{{ _.base_url }}/usuarios",
+      "metaSortKey": 3,
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_4",
+      "_type": "request",
+      "parentId": "fld_1",
+      "name": "consulta codigo",
+      "method": "GET",
+      "url": "{{ _.base_url }}/usuarios/1",
+      "metaSortKey": 4,
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_5",
+      "_type": "request",
+      "parentId": "fld_1",
+      "name": "reunioes do usuario",
+      "method": "GET",
+      "url": "{{ _.base_url }}/usuarios/2/reunioes",
+      "metaSortKey": 5,
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_6",
+      "_type": "request",
+      "parentId": "fld_1",
+      "name": "atualiza",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/usuarios/6",
+      "metaSortKey": 6,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Ana Souza\",\n  \"email\": \"ana.souza@totvs.com.br\",\n  \"senha\": \"Senha123\",\n  \"cargo\": \"Coordenadora de CS\",\n  \"empresa\": \"TOTVS\"\n}"
+      }
+    },
+    {
+      "_id": "req_7",
+      "_type": "request",
+      "parentId": "fld_1",
+      "name": "apaga",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/usuarios/6",
+      "metaSortKey": 7,
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "fld_2",
+      "_type": "request_group",
+      "parentId": "wrk_reunia",
+      "name": "2 - Clientes",
+      "metaSortKey": -998
+    },
+    {
+      "_id": "req_8",
+      "_type": "request",
+      "parentId": "fld_2",
+      "name": "cadastro",
+      "method": "POST",
+      "url": "{{ _.base_url }}/clientes",
+      "metaSortKey": 8,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Nova Empresa\",\n  \"cnpj\": \"11444777000161\",\n  \"segmento\": \"Saude\",\n  \"porte\": \"MEDIO\",\n  \"email\": \"ti@nova.com.br\"\n}"
+      }
+    },
+    {
+      "_id": "req_9",
+      "_type": "request",
+      "parentId": "fld_2",
+      "name": "consulta",
+      "method": "GET",
+      "url": "{{ _.base_url }}/clientes",
+      "metaSortKey": 9,
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_10",
+      "_type": "request",
+      "parentId": "fld_2",
+      "name": "consulta codigo",
+      "method": "GET",
+      "url": "{{ _.base_url }}/clientes/1",
+      "metaSortKey": 10,
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_11",
+      "_type": "request",
+      "parentId": "fld_2",
+      "name": "reunioes do cliente",
+      "method": "GET",
+      "url": "{{ _.base_url }}/clientes/1/reunioes",
+      "metaSortKey": 11,
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_12",
+      "_type": "request",
+      "parentId": "fld_2",
+      "name": "atualiza",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/clientes/6",
+      "metaSortKey": 12,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Nova Empresa SA\",\n  \"cnpj\": \"11444777000161\",\n  \"segmento\": \"Saude\",\n  \"porte\": \"GRANDE\",\n  \"email\": \"ti@nova.com.br\"\n}"
+      }
+    },
+    {
+      "_id": "req_13",
+      "_type": "request",
+      "parentId": "fld_2",
+      "name": "apaga",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/clientes/6",
+      "metaSortKey": 13,
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "fld_3",
+      "_type": "request_group",
+      "parentId": "wrk_reunia",
+      "name": "3 - Reunioes",
+      "metaSortKey": -997
+    },
+    {
+      "_id": "req_14",
+      "_type": "request",
+      "parentId": "fld_3",
+      "name": "cadastro VENDAS",
+      "method": "POST",
+      "url": "{{ _.base_url }}/reunioes",
+      "metaSortKey": 14,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"titulo\": \"Demonstracao Fluig\",\n  \"dataHora\": \"2026-11-20T14:00:00\",\n  \"duracaoMinutos\": 45,\n  \"tipo\": \"VENDAS\",\n  \"codigoUsuario\": 1,\n  \"codigoCliente\": 2,\n  \"valorOportunidade\": 60000,\n  \"scoreRisco\": 20,\n  \"concorrente\": false\n}"
+      }
+    },
+    {
+      "_id": "req_15",
+      "_type": "request",
+      "parentId": "fld_3",
+      "name": "cadastro CS",
+      "method": "POST",
+      "url": "{{ _.base_url }}/reunioes",
+      "metaSortKey": 15,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"titulo\": \"QBR trimestral\",\n  \"dataHora\": \"2026-11-21T10:00:00\",\n  \"duracaoMinutos\": 60,\n  \"tipo\": \"CS\",\n  \"codigoUsuario\": 3,\n  \"codigoCliente\": 4,\n  \"nps\": 8,\n  \"reclamacoes\": 1,\n  \"sinalChurn\": false\n}"
+      }
+    },
+    {
+      "_id": "req_16",
+      "_type": "request",
+      "parentId": "fld_3",
+      "name": "consulta",
+      "method": "GET",
+      "url": "{{ _.base_url }}/reunioes",
+      "metaSortKey": 16,
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_17",
+      "_type": "request",
+      "parentId": "fld_3",
+      "name": "consulta codigo",
+      "method": "GET",
+      "url": "{{ _.base_url }}/reunioes/1",
+      "metaSortKey": 17,
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_18",
+      "_type": "request",
+      "parentId": "fld_3",
+      "name": "consulta por tipo",
+      "method": "GET",
+      "url": "{{ _.base_url }}/reunioes/tipo/VENDAS",
+      "metaSortKey": 18,
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_19",
+      "_type": "request",
+      "parentId": "fld_3",
+      "name": "consulta por status",
+      "method": "GET",
+      "url": "{{ _.base_url }}/reunioes/status/AGENDADA",
+      "metaSortKey": 19,
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_20",
+      "_type": "request",
+      "parentId": "fld_3",
+      "name": "prioritarias",
+      "method": "GET",
+      "url": "{{ _.base_url }}/reunioes/prioritarias",
+      "metaSortKey": 20,
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_21",
+      "_type": "request",
+      "parentId": "fld_3",
+      "name": "atualiza",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/reunioes/3",
+      "metaSortKey": 21,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"titulo\": \"Demonstracao Protheus Agro\",\n  \"dataHora\": \"2026-11-03T10:00:00\",\n  \"duracaoMinutos\": 90,\n  \"tipo\": \"VENDAS\",\n  \"codigoUsuario\": 5,\n  \"codigoCliente\": 5,\n  \"valorOportunidade\": 150000,\n  \"scoreRisco\": 30,\n  \"concorrente\": false\n}"
+      }
+    },
+    {
+      "_id": "req_22",
+      "_type": "request",
+      "parentId": "fld_3",
+      "name": "altera status",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/reunioes/6/status",
+      "metaSortKey": 22,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"status\": \"CANCELADA\"\n}"
+      }
+    },
+    {
+      "_id": "req_23",
+      "_type": "request",
+      "parentId": "fld_3",
+      "name": "apaga",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/reunioes/7",
+      "metaSortKey": 23,
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "fld_4",
+      "_type": "request_group",
+      "parentId": "wrk_reunia",
+      "name": "4 - Transcricao e Analise",
+      "metaSortKey": -996
+    },
+    {
+      "_id": "req_24",
+      "_type": "request",
+      "parentId": "fld_4",
+      "name": "enviar transcricao reuniao 1",
+      "method": "POST",
+      "url": "{{ _.base_url }}/reunioes/1/transcricao",
+      "metaSortKey": 24,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"texto\": \"Cliente gostou da demonstração do módulo de logística do Protheus, mas disse que a SAP ofereceu desconto agressivo. Pediu uma proposta revisada até sexta e quer saber o prazo de implantação.\"\n}"
+      }
+    },
+    {
+      "_id": "req_25",
+      "_type": "request",
+      "parentId": "fld_4",
+      "name": "enviar transcricao reuniao 2",
+      "method": "POST",
+      "url": "{{ _.base_url }}/reunioes/2/transcricao",
+      "metaSortKey": 25,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"texto\": \"Reunião muito positiva. O cliente está satisfeito com o CRM e tem interesse em expandir o número de licenças no próximo trimestre.\"\n}"
+      }
+    },
+    {
+      "_id": "req_26",
+      "_type": "request",
+      "parentId": "fld_4",
+      "name": "enviar transcricao reuniao 4",
+      "method": "POST",
+      "url": "{{ _.base_url }}/reunioes/4/transcricao",
+      "metaSortKey": 26,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"texto\": \"Cliente insatisfeito com a lentidão do RM e com o suporte. Relatou vários problemas e disse que está avaliando cancelar o contrato e migrar para outro sistema.\"\n}"
+      }
+    },
+    {
+      "_id": "req_27",
+      "_type": "request",
+      "parentId": "fld_4",
+      "name": "enviar transcricao reuniao 5",
+      "method": "POST",
+      "url": "{{ _.base_url }}/reunioes/5/transcricao",
+      "metaSortKey": 27,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"texto\": \"Excelente trimestre, o time está satisfeito com o Fluig e elogiou o atendimento. Querem conhecer a TOTVS Techfin.\"\n}"
+      }
+    },
+    {
+      "_id": "req_28",
+      "_type": "request",
+      "parentId": "fld_4",
+      "name": "consulta transcricao",
+      "method": "GET",
+      "url": "{{ _.base_url }}/reunioes/1/transcricao",
+      "metaSortKey": 28,
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_29",
+      "_type": "request",
+      "parentId": "fld_4",
+      "name": "consulta analise",
+      "method": "GET",
+      "url": "{{ _.base_url }}/reunioes/1/analise",
+      "metaSortKey": 29,
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_30",
+      "_type": "request",
+      "parentId": "fld_4",
+      "name": "simular analise",
+      "method": "POST",
+      "url": "{{ _.base_url }}/analises/simular",
+      "metaSortKey": 30,
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"texto\": \"Estamos insatisfeitos, o sistema está lento e vamos cancelar o contrato.\"\n}"
+      }
+    },
+    {
+      "_id": "fld_5",
+      "_type": "request_group",
+      "parentId": "wrk_reunia",
+      "name": "5 - Dashboard",
+      "metaSortKey": -995
+    },
+    {
+      "_id": "req_31",
+      "_type": "request",
+      "parentId": "fld_5",
+      "name": "resumo",
+      "method": "GET",
+      "url": "{{ _.base_url }}/dashboard",
+      "metaSortKey": 31,
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_32",
+      "_type": "request",
+      "parentId": "fld_5",
+      "name": "clientes em risco",
+      "method": "GET",
+      "url": "{{ _.base_url }}/dashboard/clientes-risco",
+      "metaSortKey": 32,
+      "headers": [],
+      "body": {}
+    }
+  ]
+}

@@ -1,114 +1,111 @@
 classDiagram
     direction TB
-    class Analisavel {
-        <<interface>>
-        +analisarConteudo() String
-        +analiseDisponivel() boolean
-    }
-    class Reuniao {
-        <<abstract>>
-        #Long id
-        #String titulo
-        #LocalDateTime dataHora
-        #int duracaoMinutos
-        #StatusReuniao status
-        #boolean processada
-        #Long usuarioId
-        #Long clienteId
-        +getTipo() TipoReuniao
-        +calcularPrioridade() double
-        +aplicarAnalise(AnaliseReuniao) void
-        +classificarPrioridade() String
-        +alterarStatus(StatusReuniao) void
-        +registrarTranscricao() void
-    }
-    class ReuniaoVendas {
-        -BigDecimal valorOportunidade
-        -int scoreRisco
-        -boolean concorrente
-        +calcularValorPonderado() BigDecimal
-        +classificarRisco() String
-        +alertaConcorrencia() String
-    }
-    class ReuniaoCS {
-        -int nps
-        -int reclamacoes
-        -boolean sinalChurn
-        +classificarNps() String
-        +relatorioRetencao() String
-    }
     class Usuario {
-        -Long id
+        -Long codigo
         -String nome
         -String email
-        -String senhaHash
+        -String senha
         -String cargo
         -String empresa
-        -LocalDateTime dataCadastro
+        +Usuario(UsuarioDTO)
     }
     class Cliente {
-        -Long id
+        -Long codigo
         -String nome
         -String cnpj
         -String segmento
-        -PorteEmpresa porte
-        -String emailContato
-        -LocalDateTime dataCadastro
-        +getCnpjFormatado() String
+        -String porte
+        -String email
+        +Cliente(ClienteDTO)
+    }
+    class Reuniao {
+        -Long codigo
+        -String titulo
+        -LocalDateTime dataHora
+        -Integer duracaoMinutos
+        -String tipo
+        -String status
+        -Boolean processada
+        -Long codigoUsuario
+        -Long codigoCliente
+        -Double valorOportunidade
+        -Integer scoreRisco
+        -Boolean concorrente
+        -Integer nps
+        -Integer reclamacoes
+        -Boolean sinalChurn
+        +Reuniao(ReuniaoDTO)
+        +calcularPrioridade() double
+        +classificar() String
+        +gerarAlerta() String
+        +podeMudarStatus(String) boolean
     }
     class Transcricao {
-        -Long id
-        -Long reuniaoId
+        -Long codigo
+        -Long codigoReuniao
         -String texto
-        -int numeroPalavras
+        -Integer quantidadePalavras
         -LocalDateTime dataEnvio
     }
-    class AnaliseReuniao {
-        -Long id
-        -Long reuniaoId
-        -Sentimento sentimento
-        -int scoreSentimento
-        -int riscoChurn
-        -int scoreOportunidade
-        -List~String~ produtos
-        -List~String~ concorrentes
-        -List~String~ termos
+    class Analise {
+        -Long codigo
+        -Long codigoReuniao
+        -String sentimento
+        -Integer scoreSentimento
+        -Integer riscoChurn
+        -Integer scoreOportunidade
+        -String produtos
+        -String concorrentes
+        -String termos
         -String recomendacao
+        -LocalDateTime dataAnalise
         +getNivelRiscoChurn() String
         +getNivelOportunidade() String
     }
-    class StatusReuniao {
-        <<enumeration>>
-        AGENDADA
-        REALIZADA
-        CANCELADA
-        +podeMudarPara(StatusReuniao) boolean
+    class ReuniaoService {
+        +cadastrar(ReuniaoDTO) Reuniao
+        +atualizar(Long, ReuniaoDTO) Reuniao
+        +alterarStatus(Long, String) Reuniao
+        +excluir(Long) void
+        +listarPrioritarias() List~Reuniao~
+        +enviarTranscricao(Long, String) Analise
     }
-    class TipoReuniao {
-        <<enumeration>>
-        VENDAS
-        CS
+    class AnaliseService {
+        +analisar(String) Analise
     }
-    class Sentimento {
-        <<enumeration>>
-        POSITIVO
-        NEUTRO
-        NEGATIVO
+    class ClienteService {
+        +cadastrar(ClienteDTO) Cliente
+        +atualizar(Long, ClienteDTO) Cliente
+        +excluir(Long) void
+        +validarCnpj(String) void
     }
-    class PorteEmpresa {
-        <<enumeration>>
-        PEQUENO
-        MEDIO
-        GRANDE
+    class UsuarioService {
+        +cadastrar(UsuarioDTO) Usuario
+        +atualizar(Long, UsuarioDTO) Usuario
+        +excluir(Long) void
+        +login(LoginDTO) Usuario
     }
-    Analisavel <|.. Reuniao
-    Reuniao <|-- ReuniaoVendas
-    Reuniao <|-- ReuniaoCS
-    Usuario "1" --> "0..*" Reuniao : responsavel
-    Cliente "1" --> "0..*" Reuniao : participa
-    Reuniao "1" --> "0..1" Transcricao
-    Reuniao "1" --> "0..1" AnaliseReuniao
-    Reuniao ..> StatusReuniao
-    Reuniao ..> TipoReuniao
-    AnaliseReuniao ..> Sentimento
-    Cliente ..> PorteEmpresa
+    class ReuniaoRepository {
+        <<interface>>
+        +findByCodigo(Long) Reuniao
+        +findByCodigoCliente(Long) List~Reuniao~
+        +findByTipo(String) List~Reuniao~
+        +findByStatus(String) List~Reuniao~
+    }
+    class ReuniaoController {
+        +cadastrar(ReuniaoDTO) ResponseEntity
+        +consultar() ResponseEntity
+        +consultarPorCodigo(Long) ResponseEntity
+        +atualizar(Long, ReuniaoDTO) ResponseEntity
+        +excluir(Long) ResponseEntity
+        +enviarTranscricao(Long, TranscricaoDTO) ResponseEntity
+    }
+    Usuario "1" <-- "0..*" Reuniao : codigoUsuario
+    Cliente "1" <-- "0..*" Reuniao : codigoCliente
+    Reuniao "1" <-- "0..1" Transcricao : codigoReuniao
+    Reuniao "1" <-- "0..1" Analise : codigoReuniao
+    ReuniaoController --> ReuniaoService
+    ReuniaoController --> ReuniaoRepository
+    ReuniaoService --> AnaliseService
+    ReuniaoService --> ReuniaoRepository
+    ReuniaoRepository ..> Reuniao

@@ -1,60 +1,58 @@
 erDiagram
-    T_REUNIA_USUARIO ||--o{ T_REUNIA_REUNIAO : "responsavel"
-    T_REUNIA_CLIENTE ||--o{ T_REUNIA_REUNIAO : "participa"
-    T_REUNIA_REUNIAO ||--o| T_REUNIA_TRANSCRICAO : "possui"
-    T_REUNIA_REUNIAO ||--o| T_REUNIA_ANALISE : "gera"
-    T_REUNIA_USUARIO {
-        NUMBER id_usuario PK
-        VARCHAR2 nm_usuario "NN"
-        VARCHAR2 ds_email UK "NN"
-        VARCHAR2 ds_senha "NN"
-        VARCHAR2 ds_cargo
-        VARCHAR2 nm_empresa
-        TIMESTAMP dt_cadastro "NN"
+    REUNIA_USUARIOS ||--o{ REUNIA_REUNIOES : "responsavel"
+    REUNIA_CLIENTES ||--o{ REUNIA_REUNIOES : "participa"
+    REUNIA_REUNIOES ||--o| REUNIA_TRANSCRICOES : "possui"
+    REUNIA_REUNIOES ||--o| REUNIA_ANALISES : "gera"
+    REUNIA_USUARIOS {
+        NUMBER codigo PK
+        VARCHAR2 nome
+        VARCHAR2 email
+        VARCHAR2 senha
+        VARCHAR2 cargo
+        VARCHAR2 empresa
     }
-    T_REUNIA_CLIENTE {
-        NUMBER id_cliente PK
-        VARCHAR2 nm_cliente "NN"
-        CHAR nr_cnpj UK "NN"
-        VARCHAR2 ds_segmento "NN"
-        VARCHAR2 ds_porte "NN PEQUENO/MEDIO/GRANDE"
-        VARCHAR2 ds_email_contato
-        TIMESTAMP dt_cadastro "NN"
+    REUNIA_CLIENTES {
+        NUMBER codigo PK
+        VARCHAR2 nome
+        VARCHAR2 cnpj
+        VARCHAR2 segmento
+        VARCHAR2 porte
+        VARCHAR2 email
     }
-    T_REUNIA_REUNIAO {
-        NUMBER id_reuniao PK
-        NUMBER id_usuario FK "NN"
-        NUMBER id_cliente FK "NN UK com dt_reuniao"
-        VARCHAR2 ds_titulo "NN"
-        TIMESTAMP dt_reuniao "NN"
-        NUMBER nr_duracao_min "NN"
-        VARCHAR2 tp_reuniao "NN VENDAS/CS"
-        VARCHAR2 st_reuniao "NN"
-        CHAR fl_processada "NN S/N"
-        NUMBER vl_oportunidade "VENDAS"
-        NUMBER nr_score_risco "VENDAS"
-        CHAR fl_concorrente "VENDAS"
-        NUMBER nr_nps "CS"
-        NUMBER nr_reclamacoes "CS"
-        CHAR fl_sinal_churn "CS"
+    REUNIA_REUNIOES {
+        NUMBER codigo PK
+        NUMBER codigo_usuario FK
+        NUMBER codigo_cliente FK
+        VARCHAR2 titulo
+        TIMESTAMP data_hora
+        NUMBER duracao_minutos
+        VARCHAR2 tipo "VENDAS ou CS"
+        VARCHAR2 status "AGENDADA REALIZADA CANCELADA"
+        BOOLEAN processada
+        BINARY_DOUBLE valor_oportunidade "VENDAS"
+        NUMBER score_risco "VENDAS"
+        BOOLEAN concorrente "VENDAS"
+        NUMBER nps "CS"
+        NUMBER reclamacoes "CS"
+        BOOLEAN sinal_churn "CS"
     }
-    T_REUNIA_TRANSCRICAO {
-        NUMBER id_transcricao PK
-        NUMBER id_reuniao FK "NN UK"
-        CLOB ds_texto "NN"
-        NUMBER nr_palavras "NN"
-        TIMESTAMP dt_envio "NN"
+    REUNIA_TRANSCRICOES {
+        NUMBER codigo PK
+        NUMBER codigo_reuniao FK
+        VARCHAR2 texto "ate 4000"
+        NUMBER quantidade_palavras
+        TIMESTAMP data_envio
     }
-    T_REUNIA_ANALISE {
-        NUMBER id_analise PK
-        NUMBER id_reuniao FK "NN UK"
-        VARCHAR2 ds_sentimento "NN"
-        NUMBER nr_score_sentimento "NN"
-        NUMBER nr_risco_churn "NN"
-        NUMBER nr_score_oportunidade "NN"
-        VARCHAR2 ds_produtos
-        VARCHAR2 ds_concorrentes
-        VARCHAR2 ds_termos
-        VARCHAR2 ds_recomendacao "NN"
-        TIMESTAMP dt_analise "NN"
+    REUNIA_ANALISES {
+        NUMBER codigo PK
+        NUMBER codigo_reuniao FK
+        VARCHAR2 sentimento
+        NUMBER score_sentimento
+        NUMBER risco_churn
+        NUMBER score_oportunidade
+        VARCHAR2 produtos
+        VARCHAR2 concorrentes
+        VARCHAR2 termos
+        VARCHAR2 recomendacao "ate 1000"
+        TIMESTAMP data_analise
     }

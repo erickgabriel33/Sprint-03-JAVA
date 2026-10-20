@@ -1,53 +1,46 @@
-# Guia de entrega — Sprint 4 · DDD Java (prazo 14/10/2026)
+# Guia de entrega — Sprint 4 · DDD Java
 
-## O que já está pronto (80 pontos do projeto Java)
-- [x] Camada **Model**, com todas as classes batendo com as tabelas do banco (10 pts)
-- [x] Camadas **DAO + Service**, com CRUD completo e validações (20 pts)
-- [x] **API RESTful** com 27 endpoints para o Front-End (30 pts)
-- [x] **Boas práticas**: nomenclatura, exceções tratadas e JSON de erro padronizado, padrões DAO/Factory/DTO/Service, transações e testes (20 pts)
-- [x] Script Oracle (`database/reunia_oracle.sql`), testado em Oracle 23
-- [x] Diagrama de classes, modelo do banco e arquitetura em `docs/*.png`
-- [x] Tabela de endpoints no `README.md`, seção 3
+## 1. Rodar o projeto no seu computador
+1. Abra a pasta do projeto no IntelliJ (ele reconhece o `pom.xml`) e espere o Maven baixar as dependências.
+2. Em `src/main/resources/application.properties`, troque:
+   - `spring.datasource.username=seu_usuario` → seu RM (ex.: `rm565144`)
+   - `spring.datasource.password=sua_senha` → sua senha do Oracle
+3. Rode a classe `ReuniaApplication`. No console devem aparecer os `create table` das 5 tabelas `REUNIA_*`.
+4. No SQL Developer, rode o arquivo `database/dados_exemplo.sql` (F5) **uma única vez**.
+5. Abra http://localhost:8080/telas e teste.
 
-## O que VOCÊ precisa fazer
+## 2. Testar no Insomnia
+- Insomnia → **Import** → **From File** → `docs/insomnia-reunia.json`.
+- As pastas seguem a ordem: Usuários, Clientes, Reuniões, Transcrição e Análise, Dashboard.
+- Rode primeiro as 4 requisições "enviar transcricao" para o painel ficar com dados.
 
-### 1. Configurar e testar (≈ 30 min)
-1. No SQL Developer, conectado com seu RM, rode o arquivo `database/reunia_oracle.sql` inteiro com F5.
-   - **Atenção:** o script apaga e recria as tabelas `T_REUNIA_*`. Se a tabela `T_REUNIA_USUARIO` da Sprint 3 tiver dados importantes, faça backup antes.
-2. Em `src/main/java/br/com/fiap/reunia/factory/ConnectionFactory.java`, troque `SEU_RM` e `SUA_SENHA`.
-3. Rode `mvnw.cmd quarkus:dev` (Windows) e abra http://localhost:8080/q/swagger-ui.
-4. Teste o `POST /auth/login` com `erick@totvs.com.br` / `Totvs@2026`.
-
-### 2. Ligar o site do grupo à API
-- URL base: `http://localhost:8080`. O CORS já está liberado para qualquer origem.
-- Use o `fetch` ou o `axios` apontando para os endpoints da tabela do README.
-- Telas sugeridas e o endpoint de cada uma:
-
-| Tela | Endpoints |
-|---|---|
-| Login / Cadastro | `POST /auth/login`, `POST /auth/cadastro` |
-| Dashboard | `GET /dashboard/resumo`, `GET /dashboard/clientes-risco`, `GET /reunioes/prioritarias` |
-| Clientes (lista + formulário) | `GET/POST/PUT/DELETE /clientes` |
-| Reuniões (lista + formulário) | `GET/POST/PUT/DELETE /reunioes`, `PATCH /reunioes/{id}/status` |
-| Detalhe da reunião | `GET /reunioes/{id}`, `POST /reunioes/{id}/transcricao`, `GET /reunioes/{id}/analise` |
-
-### 3. PDF da documentação (20 pts). Monte nesta ordem:
-1. **Capa**: nome da equipe, nome da solução (Reun.IA) e nome + RM de todos os integrantes
+## 3. Montar o PDF (20 pontos)
+1. **Capa**: nome da equipe, nome da solução (Reun.IA), nome e RM de todos os integrantes
 2. **Sumário**
-3. **Objetivo e escopo**: use o texto do topo do README
-4. **Funcionalidades**: use as seções 3 e 4 do README
-5. **Tabela de endpoints**: copie a tabela da seção 3 do README (URI, verbo, status)
-6. **Protótipo**: **prints das telas implementadas do site** funcionando com a API. Isso é obrigatório. Se o site não ficar pronto, coloque prints do Swagger UI executando os endpoints, mas o ideal são as telas do site.
-7. **Modelo do banco**: `docs/modelo-banco.png`, ou o diagrama do Data Modeler da disciplina de Database Design
+3. **Objetivo e escopo**: use o primeiro parágrafo do README
+4. **Funcionalidades**: use a seção "Regras de negócio" do README
+5. **Tabela dos endpoints**: copie a tabela do README (URI, verbo e códigos de status)
+6. **Protótipo, com prints das telas implementadas**: imagens de `docs/prints` (ou tire os seus com o projeto rodando)
+7. **Modelo do banco de dados**: `docs/modelo-banco.png`
 8. **Diagrama de classes**: `docs/diagrama-classes.png`
 
-**NÃO coloque código-fonte nem script SQL no PDF.** Isso tirou 15 pontos na Sprint 3.
+**Não coloque código-fonte nem script SQL no PDF.** Na Sprint 3 isso tirou pontos.
 
-### 4. Entrega no Teams
-- `.zip` do projeto **sem** a pasta `target/`, contendo `pom.xml`, `mvnw`, `mvnw.cmd`, `.mvn/`, `src/`, `database/` e `docs/`
-- PDF da documentação
-- Link do GitHub
+## 4. Entregar no Teams
+- `.zip` do projeto **sem a pasta `target`**, com `pom.xml`, `mvnw`, `mvnw.cmd`, `.mvn`, `src`, `database` e `docs`
+- O PDF
+- O link do GitHub
+
+## O que foi usado além do que aparece nos slides (e por quê)
+| Item | Motivo |
+|---|---|
+| Camada `service` com `@Service` | A rubrica da Sprint 4 exige "Camada DAO e Service (validações)". Os slides não mostram Service; ela usa o mesmo `@Autowired` da aula. |
+| `@Column(length = 4000)` e `@Column(length = 1000)` | Sem isso a coluna de texto do Oracle teria só 255 caracteres, e uma transcrição não caberia. |
+| `@CrossOrigin(origins = "*")` nos controllers da API | Libera o site do grupo (front-end separado) para chamar a API pelo navegador. Se vocês usarem só as telas Thymeleaf, pode remover. |
+| `#temporals` e `#numbers` no Thymeleaf | Mostram a data como `14/10/2026 10:00` e o valor como `R$ 85.000,00` nas telas. |
+| `Normalizer` no `AnaliseService` | Tira os acentos do texto para comparar as palavras ("insatisfação" = "insatisfacao"). |
 
 ## Pontos de atenção
-- O modelo de banco foi criado por mim porque o script da Sprint 3 não foi enviado. Se a disciplina de **Database Design** usa outras tabelas, alinhe com quem fez essa parte: ou vocês adotam este script nas duas disciplinas, ou me mandam o script de vocês para eu adaptar o Model e os DAOs.
-- Antes de entregar, teste o projeto em outro computador (ou peça para um colega rodar). Foi justamente "não executa" que tirou 20 pontos na Sprint 3.
+- A senha dos usuários é salva como texto puro, como na aula. Se o professor cobrar segurança, dá para guardar um hash.
+- Antes de subir para o GitHub, lembre que o `application.properties` vai conter sua senha do Oracle.
+- Teste em outro computador antes de entregar. "Projeto não executa" tirou 20 pontos na Sprint 3.
