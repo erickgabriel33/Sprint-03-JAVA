@@ -5,22 +5,11 @@ A API cadastra usuários, clientes e reuniões (de **Vendas** ou de **Customer S
 gera automaticamente: **sentimento, risco de churn (cancelamento), chance de venda, produtos TOTVS citados, concorrentes citados,
 principais termos e recomendação de ação**.
 
-## Tecnologias (as mesmas das aulas)
+## Tecnologias
 - Spring Boot **4.1.0**, JDK **21**, projeto **Maven**
 - Spring Web, Spring Boot DevTools, Spring Data JPA, Oracle Driver (ojdbc11), Bean Validation
 - Thymeleaf + Bootstrap (telas)
 - Insomnia (testes da API)
-
----
-
-## Como rodar
-1. Abra o projeto no IntelliJ e espere o Maven carregar as dependências.
-2. Em `src/main/resources/application.properties`, troque `seu_usuario` e `sua_senha` pelo seu RM e senha do Oracle da FIAP.
-3. Rode a classe **`ReuniaApplication`**. Na primeira execução o Spring cria as 5 tabelas sozinho (`spring.jpa.hibernate.ddl-auto=update`).
-4. (Opcional) Rode o script [`database/dados_exemplo.sql`](database/dados_exemplo.sql) no SQL Developer **uma vez** para ter dados de exemplo.
-   Login de exemplo: `erick@totvs.com.br` / `Totvs@2026`.
-5. Acesse as telas em **http://localhost:8080/telas** ou importe no Insomnia o arquivo [`docs/insomnia-reunia.json`](docs/insomnia-reunia.json)
-   (*Import* → *From File*), que já traz as 32 requisições prontas.
 
 ---
 
